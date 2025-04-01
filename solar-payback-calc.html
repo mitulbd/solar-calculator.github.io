@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solar Payback Calculator | Mitul Chhabhaya</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+    input, select { margin: 5px; padding: 8px; width: 200px; }
+    #result { margin-top: 15px; font-weight: bold; white-space: pre-line; }
+    #explanation { margin-top: 20px; font-size: 14px; color: #555; text-align: left; max-width: 600px; margin-left: auto; margin-right: auto; }
+    .error { color: red; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h2>Solar Payback Calculator | Mitul Chhabhaya</h2>
+  <input type="number" id="investment" placeholder="Investment (₹)" onchange="calculate()">
+  <input type="number" id="currentBill" placeholder="Monthly Bill (₹)" onchange="calculate()"> 
+  <select id="interestRate" onchange="calculate()">
+    <option value="0">0%</option>
+    <option value="0.5">0.5%</option>
+    <option value="1">1%</option>
+    <option value="1.5">1.5%</option>
+    <option value="2">2%</option>
+    <option value="2.5">2.5%</option>
+    <option value="3">3%</option>
+    <option value="3.5">3.5%</option>
+    <option value="4">4%</option>
+    <option value="4.5">4.5%</option>
+    <option value="5">5%</option>
+  </select>
+  <p id="result"></p>
+  <p id="errorMessage" class="error"></p>
+  <script>
+    function calculate() {
+      let bill = parseFloat(document.getElementById('currentBill').value) || 0;
+      let invest = parseFloat(document.getElementById('investment').value) || 0;
+      let rate = parseFloat(document.getElementById('interestRate').value) / 100;
+      let errorMessage = document.getElementById('errorMessage');
+      errorMessage.innerText = '';
+
+      // Validation: Bill should not be greater than investment
+      if (bill > invest) {
+        errorMessage.innerText = 'Monthly Bill cannot be greater than the Investment amount.';
+        document.getElementById('result').innerText = '';
+        return;
+      }
+
+      let interest = invest * rate, savings = bill - interest;
+      if (savings <= 0) {
+        document.getElementById('result').innerText = 'Increase investment or rate';
+        return;
+      }
+
+      let months = invest / savings, years = Math.floor(months / 12), remMonths = Math.round(months % 12);
+      document.getElementById('result').innerText = `Solar Calculation:
+Monthly Interest on Investment: ₹${interest.toFixed(2)}
+Net Savings per Month (Current Bill - Interest): ₹${savings.toFixed(2)}
+Payback Period: ${years} years ${remMonths} months`;
+    }
+  </script>
+  <p style="margin-top: 20px; font-size: 14px; color: #777;">Made by Mitul Chhabhaya</p>
+</body>
+</html>
