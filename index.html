@@ -39,8 +39,7 @@
       let rate = parseFloat(document.getElementById('interestRate').value) / 100;
       let errorMessage = document.getElementById('errorMessage');
       errorMessage.innerText = '';
-
-      // Validation: Bill should not be greater than investment
+      
       if (bill > invest) {
         errorMessage.innerText = 'Monthly Bill cannot be greater than the Investment amount.';
         document.getElementById('result').innerText = '';
